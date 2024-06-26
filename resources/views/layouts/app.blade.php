@@ -9,8 +9,7 @@
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="{{ asset('css/lineicons.css') }}"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity= "sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="crossorigin="anonymous" referrerpolicy="no-referrer" /> 
     @stack('styles')
@@ -20,7 +19,7 @@
 <!-- ======== sidebar-nav start =========== -->
 <aside class="sidebar-nav-wrapper">
     <div class="navbar-logo">
-        <a href="{{ route('home') }}" >
+        <a href="#" onclick="toggleMusic(event)" id="musicLink" class="text-decoration-none">
             <h6>
                 Rumah Sakit Upaya Sehat
             </h6>
@@ -48,6 +47,7 @@
                             >
                                 <i class="lni lni-chevron-left me-2"></i> {{ __('Menu') }}
                             </button>
+                            <audio id="myAudio" src="{{ asset('images/Preman Pensiun - Pembukaan (Tema Utama), Soundtrack 1.mp3') }}"></audio>
                         </div>
                     </div>
                 </div>
@@ -106,13 +106,8 @@
                     <div class="copyright text-md-start">
                         <p class="text-sm">
                             Designed and Developed by
-                            <a
-                                    href="https://plainadmin.com"
-                                    rel="nofollow"
-                                    target="_blank"
-                            >
-                                PlainAdmin
-                            </a>
+                            <a href="#"> <i class="lni lni-follow"> {{ __('PlainAdmin')}}</i></a>
+
                         </p>
                     </div>
                 </div>
@@ -129,7 +124,44 @@
 <!-- ========= All Javascript files linkup ======== -->
 @vite('resources/js/app.js')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 @stack('scripts')
+    <!-- Inisialisasi Select2 -->
+<script>
+$(document).ready(function() {
+    $('.select2').select2();
+    search: true
+    placeholder: 'Select an option'
+});
+</script>
+
+<script>
+    function toggleMusic(event) {
+        event.preventDefault();
+        var audio = document.getElementById('myAudio');
+        var link = document.getElementById('musicLink');
+        
+        if (audio.paused) {
+            audio.play();
+            link.style.color = 'black';
+            link.style.fontWeight = 'bold';
+            link.textContent = 'Rumah Sakit Upaya Sehat';
+        } else {
+            audio.pause();
+            audio.currentTime = 0;
+            link.textContent = 'Rumah Sakit Upaya Sehat';
+        }
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+        setTimeout(function() {
+            $(".alert").alert('close');
+        }, 4000);
+    });
+</script>
 <script src="{{ asset('js/main.js') }}"></script>
 
 </body>

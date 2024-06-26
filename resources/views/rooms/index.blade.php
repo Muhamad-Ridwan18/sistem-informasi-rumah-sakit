@@ -33,7 +33,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->jenis }}</td>
-                                <td>{{ "Rp". $data->tarif ?? 'Belum Keluar' }}</td>
+                                <td>{{ "Rp ". number_format($data->tarif, 0, ',', '.') ?? 'Belum Keluar' }}</td>
                                 <td >
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editQueueModal-{{ $data->id }}">Edit</button>
                                     <form action="{{ route('rooms.destroy', $data->id) }}" method="POST" class="d-inline">

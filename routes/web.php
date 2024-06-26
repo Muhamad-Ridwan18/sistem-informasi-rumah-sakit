@@ -13,18 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
     Route::view('about', 'about')->name('about');
 
     Route::resource('users', App\Http\Controllers\UserController::class);
+
+
     
 
     // Routes for Patient
@@ -38,6 +37,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/patients/{patient}/medical-histories', [App\Http\Controllers\PatientController::class, 'addMedicalHistory'])->name('patients.medicalHistories.store');
     Route::post('/patients/{patient}/medical-examinations', [App\Http\Controllers\PatientController::class, 'addMedicalExamination'])->name('patients.medicalExaminations.store');
     Route::get('patients/search', [App\Http\Controllers\PatientController::class, 'search'])->name('patients.search');
+    Route::get('patients/{id}/print-billing', [App\Http\Controllers\PatientController::class, 'printBilling'])->name('patients.print');
+    Route::get('patients/{id}/print-resep', [App\Http\Controllers\PatientController::class, 'printResep'])->name('patients.print-resep');
 
     // Routes for Doctor
     Route::get('/doctors', [App\Http\Controllers\DoctorController::class, 'index'])->name('doctors.index');
@@ -101,4 +102,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('medicines', App\Http\Controllers\MedicineController::class);
     Route::resource('rooms', App\Http\Controllers\RoomController::class);
+
+    Route::post('/update-queue', [App\Http\Controllers\HomeController::class, 'updateQueue'])->name('home.updateQueue');
+
 });

@@ -79,7 +79,6 @@
             <p><strong>Alamat:</strong> {{ $queue->patient->address }}</p>
             <p><strong>Tanggal Lahir:</strong> {{ $queue->patient->birth_date }}</p>
             <p><strong>No. Telepon:</strong> {{ $queue->patient->phone }}</p>
-            <p><strong>Email:</strong> {{ $queue->patient->email }}</p>
             <p><strong>Poli:</strong> {{ $queue->clinic->name }}</p>
         </div>
         <div class="separator"></div>

@@ -80,6 +80,8 @@
                                                         <option value="Admin">Admin</option>
                                                         <option value="Doctor">Doctor</option>
                                                         <option value="Petugas Administrasi">Petugas Administrasi</option>
+                                                        <option value="Petugas Spesialis">Petugas Spesialis</option>
+                                                        <option value="Petugas Poliklinik Umum">Petugas Poliklinik Umum</option>
                                                         <option value="Farmasi">Farmasi</option>
                                                         <option value="Perawat">Perawat</option>
                                                         <option value="Manajemen">Manajemen</option>
@@ -137,9 +139,12 @@
                                 <option value="Admin">Admin</option>
                                 <option value="Doctor">Doctor</option>
                                 <option value="Petugas Administrasi">Petugas Administrasi</option>
+                                <option value="Petugas Spesialis">Petugas Spesialis</option>
+                                <option value="Petugas Poliklinik Umum">Petugas Poliklinik Umum</option>
                                 <option value="Farmasi">Farmasi</option>
                                 <option value="Perawat">Perawat</option>
                                 <option value="Manajemen">Manajemen</option>
+
                             </select>
                         </div>
                         <div class="mb-3">

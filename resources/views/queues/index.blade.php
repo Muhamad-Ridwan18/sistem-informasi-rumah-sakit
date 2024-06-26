@@ -14,9 +14,38 @@
     <div class="card-styles">
         <div class="card-style-3 mb-30">
             <div class="card-content">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createQueueModal">
+                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createQueueModal">
                     Tambah Antrian
                 </button>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <form  action="{{ route('queue.index') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <select class="form-control" name="clinic_id" id="clinic_id">
+                                        <option value="">Semua Poliklinik</option>
+                                        @foreach($clinics as $clinic)
+                                            <option value="{{ $clinic->id }}">{{ $clinic->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary">{{ __('Filter') }}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                        <h4 class="alert-heading">Sorry</h4>
+                        <p class="text-medium">
+                            {{ session('error') }}
+                        </p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                    
                 <table class="table">
                     <thead>
                         <tr>
@@ -24,7 +53,6 @@
                             <th>Nomor Antrian</th>
                             <th>Tanggal</th>
                             <th>Poli</th>
-                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,38 +63,9 @@
                                 <td>{{ $queue->queue_code }}</td>
                                 <td>{{ $queue->created_at }}</td>
                                 <td>{{ $queue->clinic->name }}</td>
-                                <td>{{ $queue->status }}</td>
+                                
                                 <td >
                                     <a href="{{ route('queue.print', $queue->id) }}" class="btn btn-primary">Cetak Nomor Antrian</a>
-                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#changeStatusModal{{ $queue->id }}">
-                                        Change Status
-                                    </button>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="changeStatusModal{{ $queue->id }}" tabindex="-1" aria-labelledby="changeStatusModal{{ $queue->id }}Label" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="changeStatusModal{{ $queue->id }}Label">Change Status</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{{ route('queue.updateStatus', $queue->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <div class="mb-3">
-                                                            <label for="status{{ $queue->id }}" class="form-label">Status</label>
-                                                            <select class="form-control" id="status{{ $queue->id }}" name="status">
-                                                                <option value="pending" @if($queue->status == 'pending') selected @endif>Pending</option>
-                                                                <option value="completed" @if($queue->status == 'completed') selected @endif>Completed</option>
-                                                                <option value="cancelled" @if($queue->status == 'cancelled') selected @endif>Cancelled</option>
-                                                            </select>
-                                                        </div>
-                                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </td>
                             </tr>
                         @endforeach

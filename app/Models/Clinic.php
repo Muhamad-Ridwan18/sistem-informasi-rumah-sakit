@@ -11,7 +11,7 @@ class Clinic extends Model
 
     protected $fillable = [
         'name',
-        'description',
+        'tarif',
     ];
 
     public function patients()

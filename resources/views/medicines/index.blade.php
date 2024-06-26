@@ -35,7 +35,7 @@
                                 <td>{{ $data->name }}</td>
                                 <td>{{ $data->code }}</td>
                                 <td>{{ $data->jenis }}</td>
-                                <td>{{ $data->price ?? 'Belum Keluar' }}</td>
+                                <td>Rp. {{ number_format($data->price, 0, ',', '.') ?? '-' }}</td>
                                 <td >
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editQueueModal-{{ $data->id }}">Edit</button>
                                     <form action="{{ route('medicines.destroy', $data->id) }}" method="POST" class="d-inline">
@@ -72,11 +72,18 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="jenis" class="form-label">Jenis</label>
-                                                    <input type="text" class="form-control" id="jenis" name="jenis" value="{{ old('jenis', $data->jenis) }}">
+                                                    <select class="form-select" id="jenis" name="jenis">
+                                                        <option value="">Pilih Jenis Obat</option>
+                                                        <option value="Tablet" {{ old('jenis', $data->jenis) == 'Tablet' ? 'selected' : '' }}>Tablet</option>
+                                                        <option value="Kapsul" {{ old('jenis', $data->jenis) == 'Kapsul' ? 'selected' : '' }}>Kapsul</option>
+                                                        <option value="Sirup" {{ old('jenis', $data->jenis) == 'Sirup' ? 'selected' : '' }}>Sirup</option>
+                                                        <option value="Salep" {{ old('jenis', $data->jenis) == 'Salep' ? 'selected' : '' }}>Salep</option>
+                                                        <!-- Tambahkan opsi lain sesuai kebutuhan -->
+                                                    </select>
                                                     @error('jenis')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
-                                                </div>
+                                                </div>                                                
                                                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                                             </form>
                                         </div>
@@ -110,8 +117,19 @@
                         </div>
                         <div class="mb-3">
                             <label for="jenis" class="form-label">Jenis</label>
-                            <input type="text" class="form-control" id="jenis" name="jenis">
+                            <select class="form-select" id="jenis" name="jenis">
+                                <option value="">Pilih Jenis Obat</option>
+                                <option value="Tablet" >Tablet</option>
+                                <option value="Kapsul" >Kapsul</option>
+                                <option value="Sirup" >Sirup</option>
+                                <option value="Salep" >Salep</option>
+                                <!-- Tambahkan opsi lain sesuai kebutuhan -->
+                            </select>
+                            @error('jenis')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+                        
                         <button type="submit" class="btn btn-primary">Tambah data</button>
                     </form>
                 </div>

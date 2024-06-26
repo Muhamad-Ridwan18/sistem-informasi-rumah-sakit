@@ -22,7 +22,7 @@ class ClinicController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'tarif' => 'nullable|string',
         ]);
 
         Clinic::create($request->all());
@@ -45,7 +45,7 @@ class ClinicController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'tarif' => 'nullable|string',
         ]);
 
         $clinic->update($request->all());

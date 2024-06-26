@@ -16,7 +16,6 @@ class Patient extends Model
         'address',
         'birth_date',
         'phone',
-        'email',
         'medical_record_number',
     ];
 

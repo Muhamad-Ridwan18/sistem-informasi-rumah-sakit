@@ -18,7 +18,6 @@
         <div class="card-style-3 mb-30">
             <div class="card-content">
 
-               
                <div class="alert-box primary-alert">
                     @if (session('success'))
                         <div class="alert">
@@ -35,14 +34,14 @@
                 </div>
                 <form action="{{ route('patients.index') }}" method="GET" class="mb-4">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <input type="text" name="search" class="form-control" placeholder="Search by name or NO RM" value="{{ request('search') }}">
                         </div>
                         <div class="col-md-2">
                             <select name="gender" class="form-control">
-                                <option value="">{{ __('Select Gender') }}</option>
-                                <option value="Male" {{ request('gender') == 'Male' ? 'selected' : '' }}>{{ __('Male') }}</option>
-                                <option value="Female" {{ request('gender') == 'Female' ? 'selected' : '' }}>{{ __('Female') }}</option>
+                                <option value="">Filter by Gender</option>
+                                <option value="Male" {{ request('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                                <option value="Female" {{ request('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -57,11 +56,12 @@
                         </div>
                     </div>
                 </form>
+                
                 <div class="table-wrapper table-responsive">
                     <table class="table striped-table">
                         <thead>
                         <tr>
-                            <th><h6>NO</h6></th>
+                            <th><h6>#</h6></th>
                             <th><h6>NO RM</h6></th>
                             <th><h6>Name</h6></th>
                             <th><h6>Jenis Kelamin</h6></th>

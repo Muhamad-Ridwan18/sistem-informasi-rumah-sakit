@@ -20,19 +20,21 @@
                             Tambah Rawat Inap
                         </button>
                     </div>
-                    <div class="col-4">
-                        <form action="{{ route('inpatients.index') }}" method="get" >
-                            <select name="room_number" id="room_number" class="form-control">
-                                @forelse ($rooms as $data )
-                                    <option value="{{ $data->name }}">{{ $data->name }}</option>
-                                @empty
-                                    <option value="-">data not found</option>
-                                @endforelse
-                            </select>
 
-                            <button type="submit" class="btn btn-primary">Cari</button>
-                        </form>
-                    </div>
+                    <form action="{{ route('inpatients.index') }}" method="GET" class="mb-4 mt-3">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <input type="date" name="start_date" class="form-control" placeholder="Start Date" value="{{ request('start_date') }}">
+                            </div>
+                            <div class="col-md-2">
+                                <input type="date" name="end_date" class="form-control" placeholder="End Date" value="{{ request('end_date') }}">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
+                                <a href="{{ route('inpatients.index') }}" class="btn btn-secondary">{{ __('Reset') }}</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <table class="table">
                     <thead>
@@ -162,11 +164,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="admitted_at" class="form-label">Waktu Masuk</label>
-                            <input type="datetime-local" class="form-control" id="admitted_at" name="admitted_at" value="{{ old('admitted_at') }}">
-                        </div>
-                        <div class="mb-3">
-                            <label for="discharged_at" class="form-label">Waktu Keluar</label>
-                            <input type="datetime-local" class="form-control" id="discharged_at" name="discharged_at" value="{{ old('discharged_at') }}">
+                            <input type="datetime-local" class="form-control" id="admitted_at" name="admitted_at" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
                         </div>
                         <button type="submit" class="btn btn-primary">Tambah data</button>
                     </form>

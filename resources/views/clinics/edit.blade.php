@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('Edit Doctor') }}</h2>
+                    <h2>{{ __('Edit Klinik') }}</h2>
                 </div>
             </div>
         </div>
@@ -18,7 +18,7 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
-                        <label for="name" class="form-label">{{ __('Nama Lengkap') }}</label>
+                        <label for="name" class="form-label">{{ __('Nama Klinik') }}</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $clinic->name) }}">
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>

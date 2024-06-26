@@ -8,12 +8,20 @@ use Illuminate\Http\Request;
 
 class OutpatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $outpatients = VisitHistory::select('patient_id', 'clinic_id', \DB::raw('MAX(created_at) as last_visit'))
+        $query = VisitHistory::select('patient_id', 'clinic_id', \DB::raw('MAX(created_at) as last_visit'))
             ->with(['patient', 'clinic'])
             ->groupBy('patient_id', 'clinic_id')
-            ->paginate(10);
+            ->orderBy('last_visit', 'desc');
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
+
+        $outpatients = $query->paginate(10);
 
         return view('outpatients.index', compact('outpatients'));
     }

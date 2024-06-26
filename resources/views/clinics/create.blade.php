@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('Tambah Doctor') }}</h2>
+                    <h2>{{ __('Tambah Klinik') }}</h2>
                 </div>
             </div>
         </div>
@@ -14,10 +14,10 @@
     <div class="card-styles">
         <div class="card-style-3 mb-30">
             <div class="card-content">
-                <form action="{{ route('doctors.store') }}" method="POST">
+                <form action="{{ route('clinics.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">{{ __('Nama Clinics') }}</label>
+                        <label for="name" class="form-label">{{ __('Nama Klinik') }}</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                         @error('name')
                             <div class="text-danger">{{ $message }}</div>

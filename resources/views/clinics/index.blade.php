@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('Clinics') }}</h2>
+                    <h2>{{ __('Klinik') }}</h2>
                 </div>
             </div>
             <!-- end col -->
@@ -54,7 +54,7 @@
                                     <p>{{ $data->name }}</p>
                                 </td>
                                 <td>
-                                    <p>Rp. {{ $data->tarif }}</p>
+                                    <p>Rp. {{ number_format($data->tarif, 0, ',', '.') ?? '-' }}</p>
                                 </td>
                                 <td>
                                     <a href="{{ route('clinics.edit', $data) }}" class="btn btn-secondary">Edit</a>

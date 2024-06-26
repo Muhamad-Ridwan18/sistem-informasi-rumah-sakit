@@ -37,4 +37,10 @@ class MedicalExamination extends Model
     {
         return $this->belongsTo(Clinic::class);
     }
+
+    public function medicines()
+    {
+        return $this->belongsToMany(Medicine::class)->withTimestamps();
+    }
+
 }

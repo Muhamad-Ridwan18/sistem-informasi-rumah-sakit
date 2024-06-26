@@ -9,23 +9,29 @@ use App\Models\Room;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
 
 class InpatientController extends Controller
 {
     public function index(Request $request)
     {
         $query = Inpatient::query();
-        // create query for filter data in view where room_number
-        if ($request->has('room_number')) {
-            $room_number = $request->input('room_number');
-            $query = Inpatient::where('room_number', $room_number);
+
+        // Apply date range filter
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $query->whereBetween('created_at', [$startDate, $endDate]);
         }
-        $inpatients = $query->with(['patient','room'])->paginate(10);
+
+        $inpatients = $query->with(['patient', 'room'])->latest()->paginate(10);
         $patients = Patient::all();
         $doctors = Doctor::all();
         $rooms = Room::all();
+
         return view('inpatients.index', compact('inpatients', 'patients', 'doctors', 'rooms'));
     }
+
 
     public function create()
     {
@@ -42,7 +48,15 @@ class InpatientController extends Controller
             'room_number' => 'required|string',
         ]);
 
-        Inpatient::create($request->all());
+        $admitted_at = Carbon::now()->toDateTimeString();
+        $inpatient = Inpatient::create([
+            'patient_id' => $request->patient_id,
+            'doctor_id' => $request->doctor_id,
+            'admitted_at' => $admitted_at,
+            'discharged_at' => $request->discharged_at,
+            'room_number' => $request->room_number,
+        ]);
+
 
         return redirect()->route('inpatients.index')
             ->with('success', 'Inpatient registered successfully.');

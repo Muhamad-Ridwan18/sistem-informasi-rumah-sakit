@@ -11,12 +11,26 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class QueueController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $queues = Queue::all();
+        $queueUmum = Queue::where('clinic_id', 1)->get();
+
+        // Ambil antrian dengan clinic_id 2
+        $queueDalam = Queue::where('clinic_id', 2)->get();
+
+        $queues = Queue::query();
+
+        if ($request->has('clinic_id')) {
+            $queues->where('clinic_id', $request->clinic_id);
+        }
+
+        // Ambil semua antrian yang sudah difilter
+        $queues = $queues->get();
+
         $patients = Patient::all();
         $clinics = Clinic::all();
-        return view('queues.index', compact('queues', 'patients', 'clinics'));
+
+        return view('queues.index', compact('queues', 'patients', 'clinics', 'queueUmum', 'queueDalam'));
     }
 
     public function create(Request $request)
@@ -24,6 +38,15 @@ class QueueController extends Controller
         $patientId = $request->input('patient_id');
         $clinicId = $request->input('clinic_id');
     
+        $existingQueue = Queue::where('patient_id', $patientId)
+                           ->where('clinic_id', $clinicId)
+                           ->whereDate('created_at', now()->toDateString())
+                           ->first();
+
+        if ($existingQueue) {
+            return redirect()->route('queue.index')
+                ->with('error', 'Patient already has a queue for this clinic today.');
+        }
         $patient = Patient::with('clinic')->find($patientId);
         if (!$patient) {
             return redirect()->route('queue.index')

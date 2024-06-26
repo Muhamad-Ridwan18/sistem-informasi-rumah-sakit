@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('Tambah Doctor') }}</h2>
+                    <h2>{{ __('Tambah Dokter') }}</h2>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="specialization" class="form-label">{{ __('specialization') }}</label>
+                        <label for="specialization" class="form-label">{{ __('spesialis') }}</label>
                         <input type="text" class="form-control" id="specialization" name="specialization" value="{{ old('specialization') }}">
                         @error('specialization')
                             <div class="text-danger">{{ $message }}</div>

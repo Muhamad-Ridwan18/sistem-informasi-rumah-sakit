@@ -33,7 +33,7 @@
                 </div>
                 <div class="content">
                         <h6 class="mb-10">Total Poli</h6>
-                        <h3 class="text-bold mb-10">{{ $clinic }}</h3>
+                        <h3 class="text-bold mb-10">{{ $clinics->count() }}</h3>
                         <p class="text-sm text-success">{{-- <i class="lni lni-arrow-up"></i> +2.00% <span class="text-gray">(30 days)</span> --}}</p>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                 </div>
                 <div class="content">
                         <h6 class="mb-10">Total Doctor</h6>
-                        <h3 class="text-bold mb-10">{{ $doktors }}</h3>
+                        <h3 class="text-bold mb-10">{{ $doctors }}</h3>
                         <p class="text-sm text-danger">{{-- <i class="lni lni-arrow-down"></i> -2.00% <span class="text-gray">Expense</span> --}}</p>
                 </div>
             </div>
@@ -84,623 +84,338 @@
         <!-- End Col -->
     </div>
     <!-- End Row -->
-    {{-- <div class="row">
-        <div class="col-lg-7">
-            <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap justify-content-between">
-                        <div class="left">
-                            <h6 class="text-medium mb-10">Yearly Stats</h6>
-                            <h3 class="text-bold">$245,479</h3>
-                        </div>
-                        <div class="right">
-                            <div class="select-style-1">
-                                <div class="select-position select-sm">
-                                    <select class="light-bg">
-                                            <option value="">Yearly</option>
-                                            <option value="">Monthly</option>
-                                            <option value="">Weekly</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- end select -->
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                        <canvas id="Chart1" style="width: 100%; height: 400px; margin-left: -35px"></canvas>
-                </div>
-                <!-- End Chart -->
-            </div>
-        </div>
-        <!-- End Col -->
-        <div class="col-lg-5">
-            <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                        <div class="left">
-                            <h6 class="text-medium mb-30">Sales/Revenue</h6>
-                        </div>
-                        <div class="right">
-                            <div class="select-style-1">
-                                <div class="select-position select-sm">
-                                    <select class="light-bg">
-                                            <option value="">Yearly</option>
-                                            <option value="">Monthly</option>
-                                            <option value="">Weekly</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- end select -->
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                        <canvas id="Chart2" style="width: 100%; height: 400px; margin-left: -45px"></canvas>
-                </div>
-                <!-- End Chart -->
-            </div>
-        </div>
-        <!-- End Col -->
-    </div>
-    <!-- End Row -->
     <div class="row">
-        <div class="col-lg-5">
-            <div class="card-style mb-30">
-                <div class="title d-flex justify-content-between align-items-center">
-                        <div class="left">
-                            <h6 class="text-medium mb-30">Sells by State</h6>
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div id="map" style="width: 100%; height: 400px; overflow: hidden"></div>
-                <p>Last updated: 7 days ago</p>
-            </div>
-        </div>
-        <!-- End Col -->
-        <div class="col-lg-7">
-            <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="left">
-                            <h6 class="text-medium mb-30">Top Selling Products</h6>
-                        </div>
-                        <div class="right">
-                            <div class="select-style-1">
-                                <div class="select-position select-sm">
-                                    <select class="light-bg">
-                                            <option value="">Yearly</option>
-                                            <option value="">Monthly</option>
-                                            <option value="">Weekly</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- end select -->
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div class="table-responsive">
-                        <table class="table top-selling-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>
-                                            <h6 class="text-sm text-medium">Products</h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Category</h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Price</h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Sold</h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Profit</h6>
-                                    </th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                            <div class="check-input-primary">
-                                                <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-1.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Arm Chair</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$345</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">43</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$45</p>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            <div class="check-input-primary">
-                                                <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-2.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">SOfa</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$145</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">13</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$15</p>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            <div class="check-input-primary">
-                                                <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-3.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Dining Table</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$95</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">32</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$215</p>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            <div class="check-input-primary">
-                                                <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-4.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Office Chair</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$105</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">23</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$345</p>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- End Table -->
-                </div>
-            </div>
-        </div>
-        <!-- End Col -->
-    </div>
-    <!-- End Row -->
-    <div class="row">
-        <div class="col-lg-7">
-            <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                        <div class="left">
-                            <h6 class="text-medium mb-2">Sales Forecast</h6>
-                        </div>
-                        <div class="right">
-                            <div class="select-style-1 mb-2">
-                                <div class="select-position select-sm">
-                                    <select class="light-bg">
-                                            <option value="">Last Month</option>
-                                            <option value="">Last 3 Months</option>
-                                            <option value="">Last Year</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- end select -->
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                        <div id="legend3">
-                            <ul class="legend3 d-flex flex-wrap align-items-center mb-30">
-                                <li>
-                                    <div class="d-flex">
-                                            <span class="bg-color primary-bg"> </span>
-                                            <div class="text">
-                                                <p class="text-sm text-success">
-                                                    <span class="text-dark">Revenue</span> +25.55%
-                                                    <i class="lni lni-arrow-up"></i>
-                                                </p>
-                                            </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                            <span class="bg-color purple-bg"></span>
-                                            <div class="text">
-                                                <p class="text-sm text-success">
-                                                    <span class="text-dark">Net Profit</span> +45.55%
-                                                    <i class="lni lni-arrow-up"></i>
-                                                </p>
-                                            </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                            <span class="bg-color orange-bg"></span>
-                                            <div class="text">
-                                                <p class="text-sm text-danger">
-                                                    <span class="text-dark">Order</span> -4.2%
-                                                    <i class="lni lni-arrow-down"></i>
-                                                </p>
-                                            </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <canvas id="Chart3" style="width: 100%; height: 450px; margin-left: -35px"></canvas>
-                </div>
-            </div>
-        </div>
-        <!-- End Col -->
-        <div class="col-lg-5">
-            <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                        <div class="left">
-                            <h6 class="text-medium mb-2">Traffic</h6>
-                        </div>
-                        <div class="right">
-                            <div class="select-style-1 mb-2">
-                                <div class="select-position select-sm">
-                                    <select class="bg-ligh">
-                                            <option value="">Last 6 Months</option>
-                                            <option value="">Last 3 Months</option>
-                                            <option value="">Last Year</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- end select -->
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                        <div id="legend4">
-                            <ul class="legend3 d-flex flex-wrap gap-3 gap-sm-0 align-items-center mb-30">
-                                <li>
-                                    <div class="d-flex">
-                                            <span class="bg-color primary-bg"> </span>
-                                            <div class="text">
-                                                <p class="text-sm text-success">
-                                                    <span class="text-dark">Store Visits</span>
-                                                    +25.55%
-                                                    <i class="lni lni-arrow-up"></i>
-                                                </p>
-                                                <h2>3456</h2>
-                                            </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="d-flex">
-                                            <span class="bg-color danger-bg"></span>
-                                            <div class="text">
-                                                <p class="text-sm text-danger">
-                                                    <span class="text-dark">Visitors</span> -2.05%
-                                                    <i class="lni lni-arrow-down"></i>
-                                                </p>
-                                                <h2>3456</h2>
-                                            </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <canvas id="Chart4" style="width: 100%; height: 420px; margin-left: -35px"></canvas>
-                </div>
-                <!-- End Chart -->
-            </div>
-        </div>
-        <!-- End Col -->
-    </div>
-    <!-- End Row -->
-    <div class="row">
-        <div class="col-lg-5">
-            <div class="card-style calendar-card mb-30">
-                <div id="calendar-mini"></div>
-            </div>
-        </div>
-        <!-- End Col -->
-        <div class="col-lg-7">
-            <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                        <div class="left">
-                            <h6 class="text-medium mb-30">Sales History</h6>
-                        </div>
-                        <div class="right">
-                            <div class="select-style-1">
-                                <div class="select-position select-sm">
-                                    <select class="light-bg">
-                                            <option value="">Today</option>
-                                            <option value="">Yesterday</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- end select -->
-                        </div>
-                </div>
-                <!-- End Title -->
-                <div class="table-responsive">
-                        <table class="table top-selling-table">
-                            <thead>
-                                <tr>
-                                    <th>
-                                            <h6 class="text-sm text-medium">Products</h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Category <i class="lni lni-arrows-vertical"></i></h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Revenue <i class="lni lni-arrows-vertical"></i></h6>
-                                    </th>
-                                    <th class="min-width">
-                                            <h6 class="text-sm text-medium">Status <i class="lni lni-arrows-vertical"></i></h6>
-                                    </th>
-                                    <th>
-                                            <h6 class="text-sm text-medium text-end">Actions <i class="lni lni-arrows-vertical"></i></h6>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-1.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Bedroom</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$345</p>
-                                    </td>
-                                    <td>
-                                            <span class="status-btn close-btn">Pending</span>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="edit">
-                                                    <i class="lni lni-pencil"></i>
-                                                </button>
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-2.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Arm Chair</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$345</p>
-                                    </td>
-                                    <td>
-                                            <span class="status-btn warning-btn">Refund</span>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="edit">
-                                                    <i class="lni lni-pencil"></i>
-                                                </button>
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-3.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Sofa</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$345</p>
-                                    </td>
-                                    <td>
-                                            <span class="status-btn success-btn">Completed</span>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="edit">
-                                                    <i class="lni lni-pencil"></i>
-                                                </button>
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                            <div class="product">
-                                                <div class="image">
-                                                    <img src="assets/images/products/product-mini-4.jpg" alt="" />
-                                                </div>
-                                                <p class="text-sm">Kitchen</p>
-                                            </div>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">Interior</p>
-                                    </td>
-                                    <td>
-                                            <p class="text-sm">$345</p>
-                                    </td>
-                                    <td>
-                                            <span class="status-btn close-btn">Canceled</span>
-                                    </td>
-                                    <td>
-                                            <div class="action justify-content-end">
-                                                <button class="edit">
-                                                    <i class="lni lni-pencil"></i>
-                                                </button>
-                                                <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <i class="lni lni-more-alt"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Remove</a>
-                                                    </li>
-                                                    <li class="dropdown-item">
-                                                        <a href="#0" class="text-gray">Edit</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- End Table -->
-                </div>
-            </div>
-        </div>
-        <!-- End Col -->
-    </div> --}}
+      @foreach($clinics as $clinic)
+          <div class="col-md-12 col-lg-6 order-0 mb-4">
+              <div class="card p-4">
+                  <div class="card-body">
+                      <div>
+                          <h5 class="card-title m-0 me-2 fw-bold mb-2" style="font-family: poppins; font-size:1rem;">
+                              Data Antrian {{$clinic->name}}
+                          </h5>
+                          <small class="text-muted" style="font-family: poppins; font-size:12px; color:rgb(86, 106, 127) !important;">
+                              Berikut daftar nomor antrian pasien hari ini untuk klinik {{$clinic->name}}
+                          </small>
+                      </div>
+                  </div>
+                  <div class="card-body">
+                      @if(!$queuesByClinic[$clinic->id]->isEmpty())
+                          <div class="d-flex justify-content-between align-items-center mb-3">
+                              <div class="d-flex flex-column align-items-center gap-1">
+                                  <h2 class="mb-2 fw-bold" style="color:#566a7f;">{{$currentQueueNumbers[$clinic->id]}}</h2>
+                                  <span>Nomor Antrian Sekarang</span>
+                                  <form action="{{ route('home.updateQueue') }}" method="post">
+                                      @csrf
+                                      <input type="hidden" name="clinic_id" value="{{ $clinic->id }}">
+                                      <button type="submit" class="btn btn-primary">Antrian Selanjutnya</button>
+                                  </form>
+                              </div>
+                              @php
+                                  $maleQueuesClinic = $queuesByClinic[$clinic->id]->filter(function($queue) {
+                                      return $queue->patient->gender == 'Male';
+                                  })->count();
+                                  $femaleQueuesClinic = $queuesByClinic[$clinic->id]->filter(function($queue) {
+                                      return $queue->patient->gender == 'Female';
+                                  })->count();
+                              @endphp
+                              <div id="usersChart-{{ $clinic->id }}" data-laki-laki="{{ $maleQueuesClinic }}" data-perempuan="{{ $femaleQueuesClinic }}"></div>
+                          </div>
+                          <ul class="p-0 m-0">
+                              @foreach($queuesByClinic[$clinic->id] as $queue)
+                                  <li class="d-flex mb-4 pb-1">
+                                      <div class="avatar flex-shrink-0 me-3">
+                                          @if($queue->patient->gender == 'Male')
+                                              <img src="{{ asset('assets/img/profil-images-default/man.jpeg') }}" alt="Profile Image" class="rounded">
+                                          @else
+                                              <img src="{{ asset('assets/img/profil-images-default/girl.jpeg') }}" alt="Profile Image" class="rounded">
+                                          @endif
+                                      </div>
+                                      <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                          <div class="me-2">
+                                              <h6 class="mb-1 text-capitalize">{{ $queue->patient->full_name }}</h6>
+                                              <small class="text-muted d-block">{{ $queue->created_at->locale('id')->diffForHumans() }}</small>
+                                          </div>
+                                          <div class="user-progress d-flex align-items-center gap-1">
+                                              <span class="badge badge-center bg-info rounded-pill">{{ $queue->queue_number }}</span>
+                                          </div>
+                                      </div>
+                                  </li>
+                              @endforeach
+                          </ul>
+                      @else
+                          <p class="text-center"><i class="bx bx-info-circle fs-6" style="margin-bottom: 2px;"></i>&nbsp;Belum ada antrian</p>
+                      @endif
+                  </div>
+              </div>
+          </div>
+      @endforeach
+  </div>
+      
 @endsection
+
+@push('styles')
+    <style>
+        .avatar {
+  position: relative;
+  width: 2.375rem;
+  height: 2.375rem;
+  cursor: pointer;
+}
+.avatar img {
+  width: 100%;
+  height: 100%;
+}
+.avatar .avatar-initial {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #8592a3;
+  font-weight: 700;
+}
+.avatar.avatar-online:after,
+.avatar.avatar-offline:after,
+.avatar.avatar-away:after,
+.avatar.avatar-busy:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  box-shadow: 0 0 0 2px #fff;
+}
+.avatar.avatar-online:after {
+  background-color: #71dd37;
+}
+.avatar.avatar-offline:after {
+  background-color: #8592a3;
+}
+.avatar.avatar-away:after {
+  background-color: #ffab00;
+}
+.avatar.avatar-busy:after {
+  background-color: #ff3e1d;
+}
+
+.pull-up {
+  transition: all 0.25s ease;
+}
+.pull-up:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 0.25rem 1rem rgba(161, 172, 184, 0.45);
+  z-index: 30;
+  border-radius: 50%;
+}
+
+.avatar-xs {
+  width: 1.625rem;
+  height: 1.625rem;
+}
+.avatar-xs .avatar-initial {
+  font-size: 0.625rem;
+}
+.avatar-xs.avatar-online:after,
+.avatar-xs.avatar-offline:after,
+.avatar-xs.avatar-away:after,
+.avatar-xs.avatar-busy:after {
+  width: 0.325rem;
+  height: 0.325rem;
+  right: 1px;
+}
+
+.avatar-sm {
+  width: 2rem;
+  height: 2rem;
+}
+.avatar-sm .avatar-initial {
+  font-size: 0.75rem;
+}
+.avatar-sm.avatar-online:after,
+.avatar-sm.avatar-offline:after,
+.avatar-sm.avatar-away:after,
+.avatar-sm.avatar-busy:after {
+  width: 0.4rem;
+  height: 0.4rem;
+  right: 2px;
+}
+
+.avatar-md {
+  width: 3rem;
+  height: 3rem;
+}
+.avatar-md .avatar-initial {
+  font-size: 1.125rem;
+}
+.avatar-md.avatar-online:after,
+.avatar-md.avatar-offline:after,
+.avatar-md.avatar-away:after,
+.avatar-md.avatar-busy:after {
+  width: 0.6rem;
+  height: 0.6rem;
+  right: 4px;
+}
+
+.avatar-lg {
+  width: 4rem;
+  height: 4rem;
+}
+.avatar-lg .avatar-initial {
+  font-size: 1.5rem;
+}
+.avatar-lg.avatar-online:after,
+.avatar-lg.avatar-offline:after,
+.avatar-lg.avatar-away:after,
+.avatar-lg.avatar-busy:after {
+  width: 0.8rem;
+  height: 0.8rem;
+  right: 5px;
+}
+
+.avatar-xl {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+.avatar-xl .avatar-initial {
+  font-size: 1.875rem;
+}
+.avatar-xl.avatar-online:after,
+.avatar-xl.avatar-offline:after,
+.avatar-xl.avatar-away:after,
+.avatar-xl.avatar-busy:after {
+  width: 0.9rem;
+  height: 0.9rem;
+  right: 6px;
+}
+
+.avatar-group .avatar {
+  transition: all 0.25s ease;
+}
+.avatar-group .avatar img,
+.avatar-group .avatar .avatar-initial {
+  border: 2px solid #fff;
+}
+.avatar-group .avatar .avatar-initial {
+  background-color: #9da8b5;
+}
+.avatar-group .avatar:hover {
+  z-index: 30;
+  transition: all 0.25s ease;
+}
+.avatar-group .avatar {
+  margin-left: -0.8rem;
+}
+.avatar-group .avatar:first-child {
+  margin-left: 0;
+}
+.avatar-group .avatar-xs {
+  margin-left: -0.65rem;
+}
+.avatar-group .avatar-sm {
+  margin-left: -0.75rem;
+}
+.avatar-group .avatar-md {
+  margin-left: -0.9rem;
+}
+.avatar-group .avatar-lg {
+  margin-left: -1.5rem;
+}
+.avatar-group .avatar-xl {
+  margin-left: -1.75rem;
+}
+
+    </style>
+@endpush
+
+@push('scripts')
+<script>
+  $(document).ready(function() {
+      @foreach($clinics as $clinic)
+          (function() {
+              const dataLakiLaki = $("#usersChart-{{ $clinic->id }}").data("laki-laki");
+              const dataPerempuan = $("#usersChart-{{ $clinic->id }}").data("perempuan");
+
+              const usersChart = document.querySelector("#usersChart-{{ $clinic->id }}");
+              const orderChartConfig = {
+                  chart: {
+                      height: 165,
+                      width: 130,
+                      type: "donut",
+                  },
+                  labels: ["Laki-Laki", "Perempuan"],
+                  series: [dataLakiLaki, dataPerempuan],
+                  colors: ['#7367f0', "#ff6384"],
+                  stroke: {
+                      width: 5,
+                      colors: '#fff',
+                  },
+                  dataLabels: {
+                      enabled: false,
+                      formatter: function(val, opt) {
+                          return parseInt(val) + "%";
+                      },
+                  },
+                  legend: {
+                      show: false,
+                  },
+                  grid: {
+                      padding: {
+                          top: 0,
+                          bottom: 0,
+                          right: 15,
+                      },
+                  },
+                  plotOptions: {
+                      pie: {
+                          donut: {
+                              size: "75%",
+                              labels: {
+                                  show: true,
+                                  value: {
+                                      fontSize: "1.5rem",
+                                      fontFamily: "Poppins",
+                                      color: '#566a7f',
+                                      offsetY: -15,
+                                      formatter: function(val) {
+                                          return (
+                                              ((val / (dataLakiLaki + dataPerempuan)) * 100)
+                                              .toFixed(1)
+                                              .replace(/\.0$/, "") + "%"
+                                          );
+                                      },
+                                  },
+                                  name: {
+                                      offsetY: 20,
+                                      fontFamily: "Poppins",
+                                  },
+                                  total: {
+                                      show: true,
+                                      fontSize: "0.8125rem",
+                                      color: '#a9a9a9',
+                                      label: "Total",
+                                      formatter: function(w) {
+                                          return "100%";
+                                      },
+                                  },
+                              },
+                          },
+                      },
+                  },
+              };
+
+              if (usersChart !== undefined && usersChart !== null) {
+                  const statisticsChart = new ApexCharts(usersChart, orderChartConfig);
+                  statisticsChart.render();
+              }
+          })();
+      @endforeach
+  });
+</script>
+@endpush

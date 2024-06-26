@@ -5,7 +5,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('Doctor') }}</h2>
+                    <h2>{{ __('Dokter') }}</h2>
                 </div>
             </div>
             <!-- end col -->
@@ -30,7 +30,7 @@
                </div>
 
                 <div class="alert-box primary-alert">
-                    <a href="{{ route('doctors.create') }}" class="btn btn-primary">+ Doctor</a>
+                    <a href="{{ route('doctors.create') }}" class="btn btn-primary">+ Dokter</a>
                 </div>
 
                 <div class="table-wrapper table-responsive">
@@ -38,11 +38,11 @@
                         <thead>
                         <tr>
                             <th><h6>No</h6></th>
-                            <th><h6>FullName</h6></th>
-                            <th><h6>specialization</h6></th>
-                            <th><h6>Gender</h6></th>
+                            <th><h6>Nama Lengkap</h6></th>
+                            <th><h6>Spesialis</h6></th>
+                            <th><h6>Jenis Kelamin</h6></th>
                             <th><h6>Tarif</h6></th>
-                            <th><h6>Phone</h6></th>
+                            <th><h6>No Telpon</h6></th>
                             <th><h6>Email</h6></th>
                             <th><h6>Action</h6></th>
                         </tr>
@@ -64,7 +64,8 @@
                                     <p>{{ $data->gender }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $data->tarif }}</p>
+
+                                    <p>Rp. {{ number_format($data->tarif, 0, ',', '.') }}</p>
                                 </td>
                                 <td>
                                     <p>{{ $data->phone }}</p>

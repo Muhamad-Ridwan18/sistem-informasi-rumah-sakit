@@ -3,13 +3,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Patient;
 use App\Models\Clinic;
+use App\Models\Medicine;
 use App\Models\MedicalHistory;
 use App\Models\MedicalExamination;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str; 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PatientController extends Controller
 {
@@ -18,31 +21,31 @@ class PatientController extends Controller
         $query = Patient::query();
 
         // Check for search input
-        if ($request->has('search')) {
+        if ($request->filled('search')) {
             $search = $request->input('search');
-            $query->where('full_name', 'like', "%{$search}%")
-                ->orWhere('medical_record_number', 'like', "%{$search}%");
-        }
-        // Check for gender
-        if ($request->has('gender')) {
-            $gender = $request->input('gender');
-            if (!empty($gender)) {
-                $query->where('gender', $gender);
-            }
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                    ->orWhere('medical_record_number', 'like', "%{$search}%");
+            });
         }
 
-        // Check for created_at
-        if ($request->has('start_date') && $request->has('end_date')) {
+        // Check for gender filter
+        if ($request->filled('gender')) {
+            $gender = $request->input('gender');
+            $query->where('gender', $gender);
+        }
+
+        // Check for date range filter
+        if ($request->filled('start_date') && $request->filled('end_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
-            if (!empty($startDate) && !empty($endDate)) {
-                $query->whereBetween('created_at', [$startDate, $endDate]);
-            }
-        }    
+            $query->whereBetween('created_at', [$startDate, $endDate]);
+        }
 
         $patients = $query->latest()->paginate(10);
         return view('patients.index', compact('patients'));
     }
+
 
     public function create()
     {
@@ -75,11 +78,12 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
+        $medicines = Medicine::all();
         $doctors = Doctor::all();
         $medicalHistories = $patient->medicalHistories()->latest()->get();
         $medicalExaminations = $patient->medicalExaminations()->latest()->get();
         
-        return view('patients.show', compact('patient', 'medicalHistories', 'medicalExaminations', 'doctors'));
+        return view('patients.show', compact('patient', 'medicalHistories', 'medicalExaminations', 'doctors', 'medicines'));
     }
 
     public function edit(Patient $patient)
@@ -97,7 +101,6 @@ class PatientController extends Controller
             'address' => 'required|string',
             'birth_date' => 'required|date',
             'phone' => 'required|string|max:20',
-            'email' => 'nullable|email|max:255',
 
         ]);
 
@@ -133,12 +136,12 @@ class PatientController extends Controller
     {
         $request->validate([
             'doctor_id' => 'required|exists:doctors,id',
-            'examination_datetime' => 'required|date_format:Y-m-d\TH:i',
             'diagnosis' => 'required|string',
             'prescription' => 'nullable|string',
+            'medicines' => 'array', 
+            'medicines.*' => 'exists:medicines,id', 
         ]);
-
-
+        
         $latestQueue = $patient->latestClinic()->first();
         
         if (!$latestQueue) {
@@ -152,12 +155,15 @@ class PatientController extends Controller
             'patient_id' => $patient->id,
             'doctor_id' => $request->doctor_id,
             'clinic_id' => $clinicId,
-            'examination_datetime' => $request->examination_datetime,
+            'examination_datetime' => Carbon::now()->toDateTimeString(),
             'diagnosis' => $request->diagnosis,
             'prescription' => $request->prescription,
         ]);
 
         if ($medicalExamination->save()) {
+            // Menyimpan obat yang terkait dengan pemeriksaan medis
+            $medicalExamination->medicines()->attach($request->medicines);
+
             Log::info('Medical examination saved successfully for patient ID ' . $patient->id);
         } else {
             Log::error('Failed to save medical examination for patient ID ' . $patient->id);
@@ -166,6 +172,41 @@ class PatientController extends Controller
         return redirect()->route('patients.show', $patient)
             ->with('success', 'Medical examination added successfully.');
     }
+
+    public function printBilling($id) 
+
+    {
+        $no_invoice = 'INV-' . random_int(10000000, 99999999);
+        $dateNow = Carbon::now();
+        $dateNow = $dateNow->format('d-m-Y');
+        $dateNow = explode('-', $dateNow);
+        $dateNow = $dateNow[2] . '-' . $dateNow[1] . '-' . $dateNow[0];
+        $medicalExamination = MedicalExamination::findOrFail($id);
+        
+        $html = view('patients.print-billing', compact('medicalExamination', 'no_invoice', 'dateNow'))->render();
+        
+        $pdf = Pdf::loadHTML($html);
+        
+        return $pdf->stream('Billing.pdf');
+    }
+
+    public function printResep($id) 
+
+    {
+        $no_invoice = 'INV-' . random_int(10000000, 99999999);
+        $dateNow = Carbon::now();
+        $dateNow = $dateNow->format('d-m-Y');
+        $dateNow = explode('-', $dateNow);
+        $dateNow = $dateNow[2] . '-' . $dateNow[1] . '-' . $dateNow[0];
+        $medicalExamination = MedicalExamination::findOrFail($id);
+        
+        $html = view('patients.print-resep', compact('medicalExamination', 'no_invoice', 'dateNow'))->render();
+        
+        $pdf = Pdf::loadHTML($html);
+        
+        return $pdf->stream('Billing.pdf');
+    }
+
 
     public function search(Request $request)
     {

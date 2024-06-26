@@ -29,6 +29,20 @@
                         </div>
                     @endif
                </div>
+               <form action="{{ route('outpatients.index') }}" method="GET" class="mb-4">
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="date" name="start_date" class="form-control" placeholder="Start Date" value="{{ request('start_date') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" name="end_date" class="form-control" placeholder="End Date" value="{{ request('end_date') }}">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">{{ __('Search') }}</button>
+                        <a href="{{ route('outpatients.index') }}" class="btn btn-secondary">{{ __('Reset') }}</a>
+                    </div>
+                </div>
+            </form>
 
                 <div class="table-wrapper table-responsive">
                     <table class="table striped-table">
