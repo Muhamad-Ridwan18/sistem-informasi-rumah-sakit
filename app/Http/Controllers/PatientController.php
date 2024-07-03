@@ -20,7 +20,6 @@ class PatientController extends Controller
     {
         $query = Patient::query();
 
-        // Check for search input
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function($q) use ($search) {
@@ -29,13 +28,11 @@ class PatientController extends Controller
             });
         }
 
-        // Check for gender filter
         if ($request->filled('gender')) {
             $gender = $request->input('gender');
             $query->where('gender', $gender);
         }
 
-        // Check for date range filter
         if ($request->filled('start_date') && $request->filled('end_date')) {
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');

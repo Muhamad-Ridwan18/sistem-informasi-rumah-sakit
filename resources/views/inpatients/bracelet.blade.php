@@ -57,8 +57,8 @@
         {{-- <h6>RSUD Upaya Sehat</h6> --}}
         <div class="bracelet-content">
             <p>Nama     : {{ $inpatient->patient->full_name }}</p>
-            <p>Umur     : {{ \Carbon\Carbon::parse($inpatient->patient->birth_date)->age }} tahun</p>
-            <p>Poli     : {{ $inpatient->patient->latestClinicName() }}</p>
+            <p>Tanggal Lahir     : {{ $inpatient->patient->birth_date}} </p>
+            {{-- <p>Poli     : {{ $inpatient->patient->clinic->name }}</p> --}}
             <p>Room     : {{ $inpatient->room_number }}</p>
         </div>
         <div class="qr-code">

@@ -125,7 +125,7 @@
                     <td>Rp {{ number_format($medicinePrice, 0, '.', '.') }}</td>
                 </tr>
                 <tr>
-                    <td>Tarif Klinik</td>
+                    <td>Tarif Pelayanan</td>
                     <td>Rp {{ number_format($clinicPrice, 0, '.', '.') }}</td>
                 </tr>
                 <tr>
