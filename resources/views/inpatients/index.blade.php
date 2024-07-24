@@ -162,10 +162,6 @@
                                 @endforelse
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="admitted_at" class="form-label">Waktu Masuk</label>
-                            <input type="datetime-local" class="form-control" id="admitted_at" name="admitted_at" value="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
-                        </div>
                         <button type="submit" class="btn btn-primary">Tambah data</button>
                     </form>
                 </div>
