@@ -17,19 +17,37 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create(
             [
-                'name' => 'Muhamad Ridwan 2',
-                'email' => 'admin2@gmail.com',
+                'name' => 'Muhamad Ridwan',
+                'email' => 'admin@gmail.com',
                 'role' => 'Admin',
                 'password' => bcrypt('password'),
             ],
         );
         // Buat dokter
-        User::factory()->create([
-            'name' => 'Doctor 1',
-            'email' => 'doctor1@gmail.com',
-            'role' => 'Doctor',
-            'password' => bcrypt('password'),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Muhamad Fahri',
+        //     'email' => 'doctor1@gmail.com',
+        //     'role' => 'Doctor',
+        //     'password' => bcrypt('password'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'Ahmad Zaenudin',
+        //     'email' => 'doctor2@gmail.com',
+        //     'role' => 'Doctor',
+        //     'password' => bcrypt('password'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'Lukman Nur Hakim',
+        //     'email' => 'doctor3@gmail.com',
+        //     'role' => 'Doctor',
+        //     'password' => bcrypt('password'),
+        // ]);
+        // User::factory()->create([
+        //     'name' => 'Bahar Bin Smit',
+        //     'email' => 'doctor4@gmail.com',
+        //     'role' => 'Doctor',
+        //     'password' => bcrypt('password'),
+        // ]);
 
         // Buat perawat
         User::factory()->create([

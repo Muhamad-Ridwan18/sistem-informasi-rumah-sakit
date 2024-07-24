@@ -10,7 +10,7 @@ class OutpatientController extends Controller
 {
     public function index(Request $request)
     {
-        $query = VisitHistory::select('patient_id', 'clinic_id', \DB::raw('MAX(created_at) as last_visit'))
+        $query = VisitHistory::select('patient_id', 'clinic_id',  \DB::raw('MAX(created_at) as last_visit'))
             ->with(['patient', 'clinic'])
             ->groupBy('patient_id', 'clinic_id')
             ->orderBy('last_visit', 'desc');
@@ -22,6 +22,7 @@ class OutpatientController extends Controller
         }
 
         $outpatients = $query->paginate(10);
+        
 
         return view('outpatients.index', compact('outpatients'));
     }

@@ -61,7 +61,6 @@
                     <table class="table striped-table">
                         <thead>
                         <tr>
-                            <th><h6>#</h6></th>
                             <th><h6>NO RM</h6></th>
                             <th><h6>Name</h6></th>
                             <th><h6>Jenis Kelamin</h6></th>
@@ -75,9 +74,6 @@
                         <tbody>
                         @foreach($patients as $data)
                             <tr>
-                              <td>
-                                   <p>{{ $loop->iteration }}</p>
-                              </td>
                               <td>
                                    <p>{{ $data->medical_record_number }}</p>
                               </td>

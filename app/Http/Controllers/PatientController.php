@@ -39,6 +39,14 @@ class PatientController extends Controller
             $query->whereBetween('created_at', [$startDate, $endDate]);
         }
 
+        // jika auth user role nya == doctor maka tampilkan pasien yang visit history terakhirnya adalah dokter itu
+        if (auth()->user()->role == 'doctor') {
+            $query->whereHas('visitHistories', function($q) {
+                $q->where('doctor_id', auth()->user()->id);
+            });
+        }
+        
+
         $patients = $query->latest()->paginate(10);
         return view('patients.index', compact('patients'));
     }
@@ -131,8 +139,12 @@ class PatientController extends Controller
 
     public function addMedicalExamination(Request $request, Patient $patient)
     {
+
+        // get docter id from last visit
+        $latestQueue = $patient->latestClinic()->first();
+        $doctorId = $latestQueue->doctor_id;
+
         $request->validate([
-            'doctor_id' => 'required|exists:doctors,id',
             'diagnosis' => 'required|string',
             'prescription' => 'nullable|string',
             'medicines' => 'array', 
@@ -150,7 +162,7 @@ class PatientController extends Controller
 
         $medicalExamination = new MedicalExamination([
             'patient_id' => $patient->id,
-            'doctor_id' => $request->doctor_id,
+            'doctor_id' => $doctorId,
             'clinic_id' => $clinicId,
             'examination_datetime' => Carbon::now()->toDateTimeString(),
             'diagnosis' => $request->diagnosis,

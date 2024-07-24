@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Queue;
 use App\Models\Patient;
-use App\Models\Clinic;
 use App\Models\VisitHistory;
+use App\Models\Clinic;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -29,14 +30,16 @@ class QueueController extends Controller
 
         $patients = Patient::all();
         $clinics = Clinic::all();
+        $doctors = Doctor::all();
 
-        return view('queues.index', compact('queues', 'patients', 'clinics', 'queueUmum', 'queueDalam'));
+        return view('queues.index', compact('queues', 'patients', 'clinics', 'queueUmum', 'queueDalam', 'doctors'));
     }
 
     public function create(Request $request)
     {
         $patientId = $request->input('patient_id');
         $clinicId = $request->input('clinic_id');
+        $doctorId = $request->input('doctor_id');
     
         $existingQueue = Queue::where('patient_id', $patientId)
                            ->where('clinic_id', $clinicId)
@@ -68,6 +71,7 @@ class QueueController extends Controller
         $queue = Queue::create([
             'patient_id' => $patientId,
             'clinic_id' => $clinicId,
+            
             'queue_code' => $queueCode,
             'queue_number' => $queueNumber,
             'status' => 'pending',
@@ -76,6 +80,7 @@ class QueueController extends Controller
         VisitHistory::create([
             'patient_id' => $patientId,
             'clinic_id' => $clinicId,
+            'doctor_id' => $doctorId,
             'visit_date' => now(),
         ]);
 

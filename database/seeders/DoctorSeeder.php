@@ -17,7 +17,6 @@ class DoctorSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Membuat 50 data dokter
         for ($i = 0; $i < 50; $i++) {
             Doctor::create([
                 'full_name' => $faker->name,

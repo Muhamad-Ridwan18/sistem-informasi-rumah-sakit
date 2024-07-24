@@ -27,4 +27,9 @@ class Doctor extends Model
     {
         return $this->hasMany(MedicalExamination::class);
     }
+
+    public function visitHistories()
+    {
+        return $this->hasMany(VisitHistory::class);
+    }
 }

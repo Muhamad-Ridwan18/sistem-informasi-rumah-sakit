@@ -80,15 +80,6 @@
                             @csrf
                             <div class="mb-3">
                                 <input type="hidden" name="outpatient_id" value="{{ $patient->id }}">
-                                <label for="doctor_id" class="form-label">Dokter</label>
-                                <select class="form-control" id="doctor_id" name="doctor_id">
-                                    @foreach ($doctors as $doctor)
-                                        <option value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('doctor_id')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="diagnosis" class="form-label">Diagnosis</label>
@@ -132,14 +123,14 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>Dokter</th>
-                                                <th>Diagnosis</th>
-                                                <th>Tanggal Pemeriksaan</th>
-                                                <th>poliklinik</th>
-                                                <th>Resep</th>
-                                                <th>Biaya Pemeriksaan</th>
-                                                <th>Rician Biaya</th>
+                                                <th class="text-center">No</th>
+                                                <th class="text-center">Dokter</th>
+                                                <th class="text-center">Diagnosis</th>
+                                                <th class="text-center">Tanggal Pemeriksaan</th>
+                                                <th class="text-center">poliklinik</th>
+                                                <th class="text-center">Resep</th>
+                                                <th class="text-center">Biaya Pemeriksaan</th>
+                                                <th class="text-center">Rician Biaya</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -163,13 +154,11 @@
                                                     <td>Rp {{  $total }}</td>
                                                     <td>
                                                         <div class="row">
-                                                            <div class="col">
+                                                            <div class="col d-flex justify-content-between">
                                                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $loop->iteration }}">
                                                                     Show Details
                                                                 </button>
-                                                            </div>
-                                                            <div class="col">
-                                                                <a href="{{ route('patients.print-resep', $medicalExamination->id)}}" class="btn btn-success"> Print resep</a>
+                                                                <a href="{{ route('patients.print-resep', $medicalExamination->id)}}" class="btn btn-success btn-sm">Print resep</a>
                                                             </div>
                                                         </div>
                                                     </td>

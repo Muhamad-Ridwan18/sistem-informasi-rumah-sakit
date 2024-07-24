@@ -88,7 +88,6 @@
                         <div class="mb-3">
                             <label for="patient_id" class="form-label">Pilih Pasien</label>
                             <select class="form-control"  name="patient_id">
-                                <!-- Option pasien akan diisi menggunakan JavaScript -->
                                 @forelse ($patients as $patient )
                                     <option value="{{ $patient->id }}">{{ $patient->full_name }}</option>
                                 @empty
@@ -102,6 +101,17 @@
                                 <!-- Option pasien akan diisi menggunakan JavaScript -->
                                 @forelse ($clinics as $clinic )
                                     <option value="{{ $clinic->id }}">{{ $clinic->name }}</option>
+                                @empty
+                                    <option value="-">data not found</option>
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="doctor_id" class="form-label">Pilih Doctor</label>
+                            <select class="form-control"  name="doctor_id">
+                                <!-- Option pasien akan diisi menggunakan JavaScript -->
+                                @forelse ($doctors as $doctor )
+                                    <option value="{{ $doctor->id }}">{{ $doctor->full_name }}</option>
                                 @empty
                                     <option value="-">data not found</option>
                                 @endforelse

@@ -12,6 +12,7 @@ class VisitHistory extends Model
     protected $fillable = [
         'patient_id',
         'clinic_id',
+        'doctor_id',
         'visit_date',
     ];
 
@@ -23,6 +24,11 @@ class VisitHistory extends Model
     public function clinic()
     {
         return $this->belongsTo(Clinic::class);
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(Doctor::class);
     }
 
     

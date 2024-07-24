@@ -41,7 +41,7 @@ class QueueSeeder extends Seeder
                     'queue_number' => $queueNumber,
                     'status' => $faker->randomElement(['pending']),
                     'created_at' => $faker->dateTimeBetween($startDate, $endDate),
-                    'updated_at' => $faker->dateTimeBetween('created_at', '+1 day'), // updatedAt setelah createdAt
+                    'updated_at' => $faker->dateTimeBetween('created_at', '+1 day'), 
                 ]);
             }
         }

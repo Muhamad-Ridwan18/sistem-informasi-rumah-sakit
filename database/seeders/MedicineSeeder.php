@@ -16,17 +16,64 @@ class MedicineSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
+        
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Amoxicillin',
+                'price' => '10000',
+                'jenis' => 'Tablet',
+            ],
+        );
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Cefalexin',
+                'price' => '20000',
+                'jenis' => 'Tablet',
+            ],
+        );
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Cefepime',
+                'price' => '30000',
+                'jenis' => 'Tablet',
+            ],
+        );
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Panadole',
+                'price' => '40000',
+                'jenis' => 'Tablet',
+            ]
+        );
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Boniva',
+                'price' => '40000',
+                'jenis' => 'Tablet',
+            ]
+        );
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Tamiflu',
+                'price' => '40000',
+                'jenis' => 'Tablet',
+            ]
+        );
+        Medicine::create(
+            [
+                'code' => '' . Str::random(10),
+                'name' => 'Insulina',
+                'price' => '40000',
+                'jenis' => 'Tablet',
+            ]
+        );
 
-        for ($i = 0; $i < 50; $i++) {
-            $code = "O" . Str::random(5);
-
-            Medicine::create([
-                'code' => $code,
-                'name' => $faker->unique()->word,
-                'price' => $faker->randomElement([5000, 10000, 15000, 20000, 25000, 30000, 35000, 40000, 45000, 50000]),
-                'jenis' => $faker->randomElement(['Tablet', 'Kapsul', 'Sirup', 'Salep']),
-            ]);
-        }
     }
 }
+

@@ -70,4 +70,10 @@ class Patient extends Model
         return $this->latestClinic()->first()->clinic->name;
     }
 
+    // get docter name for patient from last visit
+    public function latestDoctorName()
+    {
+        return $this->latestClinic()->first()->doctor->name;
+    }
+
 }
