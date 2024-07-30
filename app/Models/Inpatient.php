@@ -12,7 +12,7 @@ class Inpatient extends Model
     protected $fillable = [
         'patient_id',
         'doctor_id',
-        'room_number',
+        'room_id',
         'admitted_at',
         'discharged_at',
     ];

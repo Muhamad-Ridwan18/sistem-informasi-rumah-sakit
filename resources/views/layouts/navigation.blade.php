@@ -22,7 +22,6 @@
                 ['route' => 'home', 'text' => 'Dashboard', 'icon' => 'home'],
                 ['route' => 'patients.index', 'text' => 'Pasien', 'icon' => 'user'],
                 ['route' => 'queue.index', 'text' => 'Antrian', 'icon' => 'ticket-alt'],
-                ['route' => 'inpatients.index', 'text' => 'Rawat Inap', 'icon' => 'bed'],
             ],
             'Petugas Spesialis' => [
                 ['route' => 'home', 'text' => 'Dashboard', 'icon' => 'home'],
@@ -32,20 +31,21 @@
                 ['route' => 'home', 'text' => 'Dashboard', 'icon' => 'home'],
                 ['route' => 'patients.index', 'text' => 'Pasien', 'icon' => 'user'],
             ],
-            'Perawat' => [
+            'Operator Rawat Inap' => [
                 ['route' => 'home', 'text' => 'Dashboard', 'icon' => 'home'],
-                ['route' => 'patients.index', 'text' => 'Pasien', 'icon' => 'user'],
+                
+                ['route' => 'inpatients.index', 'text' => 'Rawat Inap', 'icon' => 'bed'],
             ],
-            'Farmasis' => [
+            'Operator Rawat Jalan' => [
                 ['route' => 'home', 'text' => 'Dashboard', 'icon' => 'home'],
-                ['route' => 'medicines.index', 'text' => 'Obat', 'icon' => 'pills'],
+                ['route' => 'queue.index', 'text' => 'Antrian', 'icon' => 'ticket-alt'],
+                ['route' => 'outpatients.index', 'text' => 'Rawat Jalan', 'icon' => 'user-nurse'],
             ],
             'Manajemen' => [
                 ['route' => 'home', 'text' => 'Dashboard', 'icon' => 'home'],
                 ['route' => 'outpatients.index', 'text' => 'Rawat Jalan', 'icon' => 'user-nurse'],
                 ['route' => 'clinics.index', 'text' => 'Klinik', 'icon' => 'hospital'],
                 ['route' => 'doctors.index', 'text' => 'Dokter', 'icon' => 'user-md'],
-                ['route' => 'medicines.index', 'text' => 'Obat', 'icon' => 'pills'],
             ],
         ];
         $navigation = $navigationConfig[$userRole] ?? [];

@@ -25,6 +25,7 @@ class InpatientController extends Controller
         }
 
         $inpatients = $query->with(['patient', 'room'])->latest()->paginate(10);
+        
         $patients = Patient::all();
         $doctors = Doctor::all();
         $rooms = Room::all();

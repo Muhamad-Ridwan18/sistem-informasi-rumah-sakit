@@ -29,6 +29,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Fetch all clinics
         $user = auth()->user();
 
         if ($user->role == 'Petugas Poliklinik Umum') {
@@ -39,53 +40,25 @@ class HomeController extends Controller
             $clinics = Clinic::all();
         }
 
-        // Inisialisasi nomor antrian saat ini untuk setiap klinik
-        $currentQueueNumbers = [];
-        foreach ($clinics as $clinic) {
-            $currentQueueNumbers[$clinic->id] = 'No active queues today';
-        }
+        // Fetch all queues grouped by clinic
+        $queuesByClinic = Queue::with('patient')
+            ->whereDate('created_at', today())
+            ->get()
+            ->groupBy('clinic_id');
 
-        $queuesByClinic = [];
+        // Calculate the current queue number for each clinic
+        $currentQueueNumbers = $queuesByClinic->map(function ($queues) {
+            return $queues->first()->queue_number ?? 0;
+        });
 
-        $maleQueues = Queue::whereHas('patient', function ($query) {
-            $query->where('gender', 'male');
-        })->whereDate('created_at', Carbon::today())->get();
-
-        $femaleQueues = Queue::whereHas('patient', function ($query) {
-            $query->where('gender', 'female');
-        })->whereDate('created_at', Carbon::today())->get();
-
-        foreach ($clinics as $clinic) {
-            $queuesByClinic[$clinic->id] = Queue::with('patient')
-                ->where('clinic_id', $clinic->id)
-                ->whereDate('created_at', Carbon::today())
-                ->orderBy('created_at', 'asc')
-                ->get();
-        }
-
-        // Mendapatkan nomor antrian saat ini untuk setiap klinik
-        foreach ($clinics as $clinic) {
-            $currentQueue = Queue::where('status', 'pending')
-                ->whereDate('created_at', Carbon::today())
-                ->where('clinic_id', $clinic->id)
-                ->orderBy('created_at', 'asc')
-                ->first();
-
-            if ($currentQueue) {
-                $currentQueueNumbers[$clinic->id] = $currentQueue->queue_number;
-            }
-        }
-
+        // Pass the data to the view
         return view('home', [
-            'clinicCount' => Clinic::count(),
-            'patients' => Patient::count(),
-            'doctors' => Doctor::count(),
-            'rooms' => Room::count(),
-            'maleQueues' => $maleQueues,
-            'femaleQueues' => $femaleQueues,
             'clinics' => $clinics,
             'queuesByClinic' => $queuesByClinic,
             'currentQueueNumbers' => $currentQueueNumbers,
+            'rooms' => Room::count(),
+            'doctors' => Doctor::count(),
+            'patients' => Patient::count(),
         ]);
 
     }
@@ -99,7 +72,6 @@ class HomeController extends Controller
 
         $currentQueue = Queue::where('clinic_id', $clinicId)
                             ->whereDate('created_at', today())
-                            ->where('status', 'pending') // Filter by active status
                             ->orderBy('created_at', 'asc')
                             ->first();
 
@@ -112,4 +84,6 @@ class HomeController extends Controller
             return redirect()->back()->with('error', 'Tidak ada antrian aktif.');
         }
     }
+
+
 }

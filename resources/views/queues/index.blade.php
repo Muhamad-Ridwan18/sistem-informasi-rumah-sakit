@@ -11,31 +11,13 @@
         </div>
     </div>
     
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createQueueModal">
+        Tambah Antrian
+    </button>
+
     <div class="card-styles">
         <div class="card-style-3 mb-30">
             <div class="card-content">
-                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createQueueModal">
-                    Tambah Antrian
-                </button>
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <form  action="{{ route('queue.index') }}" method="GET">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <select class="form-control" name="clinic_id" id="clinic_id">
-                                        <option value="">Semua Poliklinik</option>
-                                        @foreach($clinics as $clinic)
-                                            <option value="{{ $clinic->id }}">{{ $clinic->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary">{{ __('Filter') }}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
                         <h4 class="alert-heading">Sorry</h4>
@@ -46,31 +28,73 @@
                     </div>
                 @endif
                     
-                <table class="table">
-                    <thead>
+                <h3>{{ __('Rawat Jalan') }}</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nama Pasien</th>
+                        <th>Nomor Antrian</th>
+                        <th>Tanggal</th>
+                        <th>Poli</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($queuesRawatJalan as $queue)
                         <tr>
-                            <th>Nama Pasien</th>
-                            <th>Nomor Antrian</th>
-                            <th>Tanggal</th>
-                            <th>Poli</th>
-                            <th>Action</th>
+                            <td>{{ $queue->patient->full_name }}</td>
+                            <td>{{ $queue->queue_code }}</td>
+                            <td>{{ $queue->created_at }}</td>
+                            <td>{{ $queue->clinic->name }}</td>
+                            <td>
+                                <a href="{{ route('queue.print', $queue->id) }}" class="btn btn-primary">Cetak Nomor Antrian</a>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($queues as $queue)
-                            <tr>
-                                <td>{{ $queue->patient->full_name }}</td>
-                                <td>{{ $queue->queue_code }}</td>
-                                <td>{{ $queue->created_at }}</td>
-                                <td>{{ $queue->clinic->name }}</td>
-                                
-                                <td >
-                                    <a href="{{ route('queue.print', $queue->id) }}" class="btn btn-primary">Cetak Nomor Antrian</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                    @endforeach
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-styles">
+        <div class="card-style-3 mb-30">
+            <div class="card-content">
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                        <h4 class="alert-heading">Sorry</h4>
+                        <p class="text-medium">
+                            {{ session('error') }}
+                        </p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
+            <h3>{{ __('Rawat Inap') }}</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nama Pasien</th>
+                        <th>Nomor Antrian</th>
+                        <th>Tanggal</th>
+                        <th>Poli</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($queuesRawatInap as $queue)
+                        <tr>
+                            <td>{{ $queue->patient->full_name }}</td>
+                            <td>{{ $queue->queue_code }}</td>
+                            <td>{{ $queue->created_at }}</td>
+                            <td>{{ $queue->clinic->name }}</td>
+                            <td>
+                                <a href="{{ route('queue.print', $queue->id) }}" class="btn btn-primary">Cetak Nomor Antrian</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
             </div>
         </div>
     </div>
@@ -117,6 +141,23 @@
                                 @endforelse
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Pilih Layanan</label>
+                            <select class="form-control" name="status" id="status" onchange="toggleRoomSelection()">
+                                <option value="rawat jalan">Rawat Jalan</option>
+                                <option value="rawat inap">Rawat Inap</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="roomSelection" style="display: none;">
+                            <label for="room_id" class="form-label">Pilih Kamar</label>
+                            <select class="form-control" name="room_id">
+                                @forelse ($rooms as $room)
+                                    <option value="{{ $room->id }}">{{ $room->name }}</option>
+                                @empty
+                                    <option value="-">data not found</option>
+                                @endforelse
+                            </select>
+                        </div>                                                
                         <button type="submit" class="btn btn-primary">Buat Antrian</button>
                     </form>
                 </div>
@@ -126,3 +167,18 @@
 
 
 @endsection
+
+@push('scripts')
+<script>
+    function toggleRoomSelection() {
+        var status = document.getElementById('status').value;
+        var roomSelection = document.getElementById('roomSelection');
+        if (status === 'rawat inap') {
+            roomSelection.style.display = 'block';
+        } else {
+            roomSelection.style.display = 'none';
+        }
+    }
+</script>
+
+@endpush

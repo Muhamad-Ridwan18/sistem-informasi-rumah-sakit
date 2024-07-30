@@ -15,11 +15,7 @@
         <div class="card-style-3 mb-30">
             <div class="card-content">
                 <div class="row">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createQueueModal">
-                            Tambah Rawat Inap
-                        </button>
-                    </div>
+                    
 
                     <form action="{{ route('inpatients.index') }}" method="GET" class="mb-4 mt-3">
                         <div class="row">
@@ -39,7 +35,6 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>No</th>
                             <th>Nama Pasien</th>
                             <th>Nama Kamar</th>
                             <th>Waktu Masuk</th>
@@ -50,10 +45,9 @@
                     <tbody>
                         @foreach($inpatients as $data)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $data->patient->full_name }}</td>
-                                <td>{{ $data->room_number }}</td>
-                                <td>{{ $data->admitted_at }}</td>
+                                <td>{{ $data->room->name }}</td>
+                                <td>{{ date('d-M-Y H:i', strtotime($data->admitted_at)) }}</td>
                                 <td>{{ $data->discharged_at ?? 'Belum Keluar' }}</td>
                                 <td >
                                     <a href="{{ route('patients.show', $data->patient->id) }}" class="btn btn-primary">Show</a>

@@ -15,6 +15,7 @@ class Queue extends Model
         'queue_code',
         'queue_number',
         'status',
+        'room_id',
     ];
 
     public function patient()
@@ -25,5 +26,10 @@ class Queue extends Model
     public function clinic()
     {
         return $this->belongsTo(Clinic::class);
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
     }
 }

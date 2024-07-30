@@ -5,154 +5,214 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title">
-                        <h2>Dashboard</h2>
+                    <h2>Dashboard</h2>
                 </div>
             </div>
-            <!-- end col -->
             <div class="col-md-6">
                 <div class="breadcrumb-wrapper">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="#0">Dashboard</a>
-                                </li>
-                            </ol>
-                        </nav>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#0">Dashboard</a></li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
-            <!-- end col -->
         </div>
-        <!-- end row -->
     </div>
-    <!-- ========== title-wrapper end ========== -->
     <div class="row">
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
-                <div class="icon purple">
-                        <i class="lni lni-cart-full"></i>
-                </div>
+                <div class="icon purple"><i class="lni lni-cart-full"></i></div>
                 <div class="content">
-                        <h6 class="mb-10">Total Poli</h6>
-                        <h3 class="text-bold mb-10">{{ $clinics->count() }}</h3>
-                        <p class="text-sm text-success">{{-- <i class="lni lni-arrow-up"></i> +2.00% <span class="text-gray">(30 days)</span> --}}</p>
+                    <h6 class="mb-10">Total Poli</h6>
+                    <h3 class="text-bold mb-10">{{ $clinics->count() }}</h3>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
-                <div class="icon success">
-                        <i class="lni lni-dollar"></i>
-                </div>
+                <div class="icon success"><i class="lni lni-dollar"></i></div>
                 <div class="content">
-                        <h6 class="mb-10">Total Room</h6>
-                        <h3 class="text-bold mb-10">{{ $rooms }}</h3>
-                        <p class="text-sm text-success">{{-- <i class="lni lni-arrow-up"></i> +5.45% <span class="text-gray">Increased</span> --}}</p>
+                    <h6 class="mb-10">Total Room</h6>
+                    <h3 class="text-bold mb-10">{{ $rooms }}</h3>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
-                <div class="icon primary">
-                        <i class="lni lni-credit-cards"></i>
-                </div>
+                <div class="icon primary"><i class="lni lni-credit-cards"></i></div>
                 <div class="content">
-                        <h6 class="mb-10">Total Doctor</h6>
-                        <h3 class="text-bold mb-10">{{ $doctors }}</h3>
-                        <p class="text-sm text-danger">{{-- <i class="lni lni-arrow-down"></i> -2.00% <span class="text-gray">Expense</span> --}}</p>
+                    <h6 class="mb-10">Total Doctor</h6>
+                    <h3 class="text-bold mb-10">{{ $doctors }}</h3>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="icon-card mb-30">
-                <div class="icon orange">
-                        <i class="lni lni-user"></i>
-                </div>
+                <div class="icon orange"><i class="lni lni-user"></i></div>
                 <div class="content">
-                        <h6 class="mb-10">Total Pasien</h6>
-                        <h3 class="text-bold mb-10">{{ $patients }}</h3>
-                        <p class="text-sm text-danger">{{-- <i class="lni lni-arrow-down"></i> -25.00% <span class="text-gray"> Earning</span> --}}</p>
+                    <h6 class="mb-10">Total Pasien</h6>
+                    <h3 class="text-bold mb-10">{{ $patients }}</h3>
                 </div>
             </div>
-            <!-- End Icon Cart -->
         </div>
-        <!-- End Col -->
     </div>
-    <!-- End Row -->
     <div class="row">
-      @foreach($clinics as $clinic)
-          <div class="col-md-12 col-lg-6 order-0 mb-4">
-              <div class="card p-4">
-                  <div class="card-body">
-                      <div>
-                          <h5 class="card-title m-0 me-2 fw-bold mb-2" style="font-family: poppins; font-size:1rem;">
-                              Data Antrian {{$clinic->name}}
-                          </h5>
-                          <small class="text-muted" style="font-family: poppins; font-size:12px; color:rgb(86, 106, 127) !important;">
-                              Berikut daftar nomor antrian pasien hari ini untuk klinik {{$clinic->name}}
-                          </small>
-                      </div>
-                  </div>
-                  <div class="card-body">
-                      @if(!$queuesByClinic[$clinic->id]->isEmpty())
-                          <div class="d-flex justify-content-between align-items-center mb-3">
-                              <div class="d-flex flex-column align-items-center gap-1">
-                                  <h2 class="mb-2 fw-bold" style="color:#566a7f;">{{$currentQueueNumbers[$clinic->id]}}</h2>
-                                  <span>Nomor Antrian Sekarang</span>
-                                  <form action="{{ route('home.updateQueue') }}" method="post">
-                                      @csrf
-                                      <input type="hidden" name="clinic_id" value="{{ $clinic->id }}">
-                                      <button type="submit" class="btn btn-primary">Antrian Selanjutnya</button>
-                                  </form>
-                              </div>
-                              @php
-                                  $maleQueuesClinic = $queuesByClinic[$clinic->id]->filter(function($queue) {
-                                      return $queue->patient->gender == 'Male';
-                                  })->count();
-                                  $femaleQueuesClinic = $queuesByClinic[$clinic->id]->filter(function($queue) {
-                                      return $queue->patient->gender == 'Female';
-                                  })->count();
-                              @endphp
-                              <div id="usersChart-{{ $clinic->id }}" data-laki-laki="{{ $maleQueuesClinic }}" data-perempuan="{{ $femaleQueuesClinic }}"></div>
-                          </div>
-                          <ul class="p-0 m-0">
-                              @foreach($queuesByClinic[$clinic->id] as $queue)
-                                  <li class="d-flex mb-4 pb-1">
-                                      <div class="avatar flex-shrink-0 me-3">
-                                          @if($queue->patient->gender == 'Male')
-                                              <img src="{{ asset('assets/img/profil-images-default/man.jpeg') }}" alt="Profile Image" class="rounded">
-                                          @else
-                                              <img src="{{ asset('assets/img/profil-images-default/girl.jpeg') }}" alt="Profile Image" class="rounded">
-                                          @endif
-                                      </div>
-                                      <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                          <div class="me-2">
-                                              <h6 class="mb-1 text-capitalize">{{ $queue->patient->full_name }}</h6>
-                                              <small class="text-muted d-block">{{ $queue->created_at->locale('id')->diffForHumans() }}</small>
-                                          </div>
-                                          <div class="user-progress d-flex align-items-center gap-1">
-                                              <span class="badge badge-center bg-info rounded-pill">{{ $queue->queue_number }}</span>
-                                          </div>
-                                      </div>
-                                  </li>
-                              @endforeach
-                          </ul>
-                      @else
-                          <p class="text-center"><i class="bx bx-info-circle fs-6" style="margin-bottom: 2px;"></i>&nbsp;Belum ada antrian</p>
-                      @endif
-                  </div>
-              </div>
-          </div>
-      @endforeach
-  </div>
-      
+        @foreach($clinics as $clinic)
+            <div class="col-md-12 col-lg-6 order-0 mb-4">
+                <div class="card p-4">
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title m-0 me-2 fw-bold mb-2" style="font-family: poppins; font-size:1rem;">
+                                Data Antrian {{$clinic->name}}
+                            </h5>
+                            <small class="text-muted" style="font-family: poppins; font-size:12px; color:rgb(86, 106, 127) !important;">
+                                Berikut daftar nomor antrian pasien hari ini untuk klinik {{$clinic->name}}
+                            </small>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @if(isset($queuesByClinic[$clinic->id]) && !$queuesByClinic[$clinic->id]->isEmpty())
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex flex-column align-items-center gap-1">
+                                    <h2 class="mb-2 fw-bold" style="color:#566a7f;">{{$currentQueueNumbers[$clinic->id]}}</h2>
+                                    <span>Nomor Antrian Sekarang</span>
+                                    <form action="{{ route('home.updateQueue') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="clinic_id" value="{{ $clinic->id }}">
+                                        <button type="submit" class="btn btn-primary">Antrian Selanjutnya</button>
+                                    </form>
+                                </div>
+                                @php
+                                    $maleQueuesClinic = $queuesByClinic[$clinic->id]->filter(function($queue) {
+                                        return $queue->patient->gender == 'Male';
+                                    })->count();
+                                    $femaleQueuesClinic = $queuesByClinic[$clinic->id]->filter(function($queue) {
+                                        return $queue->patient->gender == 'Female';
+                                    })->count();
+                                @endphp
+                                <div id="usersChart-{{ $clinic->id }}" data-laki-laki="{{ $maleQueuesClinic }}" data-perempuan="{{ $femaleQueuesClinic }}"></div>
+                            </div>
+                            <ul class="p-0 m-0">
+                                @foreach($queuesByClinic[$clinic->id] as $queue)
+                                    <li class="d-flex mb-4 pb-1">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            @if($queue->patient->gender == 'Male')
+                                                <img src="{{ asset('assets/img/profil-images-default/man.jpeg') }}" alt="Profile Image" class="rounded">
+                                            @else
+                                                <img src="{{ asset('assets/img/profil-images-default/girl.jpeg') }}" alt="Profile Image" class="rounded">
+                                            @endif
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                                <h6 class="mb-1 text-capitalize">{{ $queue->patient->full_name }}</h6>
+                                                <small class="text-muted d-block">{{ $queue->created_at->locale('id')->diffForHumans() }}</small>
+                                            </div>
+                                            <div class="user-progress d-flex align-items-center gap-1">
+                                                <span class="badge badge-center bg-info rounded-pill">{{ $queue->queue_number }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-center"><i class="bx bx-info-circle fs-6" style="margin-bottom: 2px;"></i>&nbsp;Belum ada antrian</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 @endsection
 
+@push('styles')
+    <style>
+        /* Add your styles here */
+    </style>
+@endpush
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        @foreach($clinics as $clinic)
+            (function() {
+                const dataLakiLaki = $("#usersChart-{{ $clinic->id }}").data("laki-laki");
+                const dataPerempuan = $("#usersChart-{{ $clinic->id }}").data("perempuan");
+
+                const usersChart = document.querySelector("#usersChart-{{ $clinic->id }}");
+                const orderChartConfig = {
+                    chart: {
+                        height: 165,
+                        width: 130,
+                        type: "donut",
+                    },
+                    labels: ["Laki-Laki", "Perempuan"],
+                    series: [dataLakiLaki, dataPerempuan],
+                    colors: ['#7367f0', "#ff6384"],
+                    stroke: {
+                        width: 5,
+                        colors: '#fff',
+                    },
+                    dataLabels: {
+                        enabled: false,
+                        formatter: function(val, opt) {
+                            return parseInt(val) + "%";
+                        },
+                    },
+                    legend: {
+                        show: false,
+                    },
+                    grid: {
+                        padding: {
+                            top: 0,
+                            bottom: 0,
+                            right: 15,
+                        },
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: "75%",
+                                labels: {
+                                    show: true,
+                                    value: {
+                                        fontSize: "1.5rem",
+                                        fontFamily: "Poppins",
+                                        color: "#566a7f",
+                                        offsetY: -15,
+                                        formatter: function(val) {
+                                            return parseInt(val);
+                                        },
+                                    },
+                                    name: {
+                                        offsetY: 20,
+                                        fontFamily: "Poppins",
+                                    },
+                                    total: {
+                                        show: true,
+                                        fontSize: "0.8125rem",
+                                        label: "Total",
+                                        color: "#566a7f",
+                                        formatter: function(w) {
+                                            return w.globals.seriesTotals.reduce(function(a, b) {
+                                                return a + b;
+                                            }, 0);
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                };
+                if (typeof usersChart !== undefined && usersChart !== null) {
+                    const usersChartInstance = new ApexCharts(usersChart, orderChartConfig);
+                    usersChartInstance.render();
+                }
+            })();
+        @endforeach
+    });
+</script>
+@endpush
 @push('styles')
     <style>
         .avatar {
@@ -332,90 +392,4 @@
 }
 
     </style>
-@endpush
-
-@push('scripts')
-<script>
-  $(document).ready(function() {
-      @foreach($clinics as $clinic)
-          (function() {
-              const dataLakiLaki = $("#usersChart-{{ $clinic->id }}").data("laki-laki");
-              const dataPerempuan = $("#usersChart-{{ $clinic->id }}").data("perempuan");
-
-              const usersChart = document.querySelector("#usersChart-{{ $clinic->id }}");
-              const orderChartConfig = {
-                  chart: {
-                      height: 165,
-                      width: 130,
-                      type: "donut",
-                  },
-                  labels: ["Laki-Laki", "Perempuan"],
-                  series: [dataLakiLaki, dataPerempuan],
-                  colors: ['#7367f0', "#ff6384"],
-                  stroke: {
-                      width: 5,
-                      colors: '#fff',
-                  },
-                  dataLabels: {
-                      enabled: false,
-                      formatter: function(val, opt) {
-                          return parseInt(val) + "%";
-                      },
-                  },
-                  legend: {
-                      show: false,
-                  },
-                  grid: {
-                      padding: {
-                          top: 0,
-                          bottom: 0,
-                          right: 15,
-                      },
-                  },
-                  plotOptions: {
-                      pie: {
-                          donut: {
-                              size: "75%",
-                              labels: {
-                                  show: true,
-                                  value: {
-                                      fontSize: "1.5rem",
-                                      fontFamily: "Poppins",
-                                      color: '#566a7f',
-                                      offsetY: -15,
-                                      formatter: function(val) {
-                                          return (
-                                              ((val / (dataLakiLaki + dataPerempuan)) * 100)
-                                              .toFixed(1)
-                                              .replace(/\.0$/, "") + "%"
-                                          );
-                                      },
-                                  },
-                                  name: {
-                                      offsetY: 20,
-                                      fontFamily: "Poppins",
-                                  },
-                                  total: {
-                                      show: true,
-                                      fontSize: "0.8125rem",
-                                      color: '#a9a9a9',
-                                      label: "Total",
-                                      formatter: function(w) {
-                                          return "100%";
-                                      },
-                                  },
-                              },
-                          },
-                      },
-                  },
-              };
-
-              if (usersChart !== undefined && usersChart !== null) {
-                  const statisticsChart = new ApexCharts(usersChart, orderChartConfig);
-                  statisticsChart.render();
-              }
-          })();
-      @endforeach
-  });
-</script>
 @endpush

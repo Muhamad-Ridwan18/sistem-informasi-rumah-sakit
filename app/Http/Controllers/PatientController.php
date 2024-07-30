@@ -139,10 +139,15 @@ class PatientController extends Controller
 
     public function addMedicalExamination(Request $request, Patient $patient)
     {
-
+        // get docter id from inpatient
+        $inpatient = $patient->inpatients()->first();
+        if ($inpatient) {
+            $doctorId = $inpatient->doctor_id;
+        }
+        // dd($inpatient);
         // get docter id from last visit
         $latestQueue = $patient->latestClinic()->first();
-        $doctorId = $latestQueue->doctor_id;
+        $doctorId = $latestQueue->doctor_id ?? $inpatient->doctor_id;
 
         $request->validate([
             'diagnosis' => 'required|string',
@@ -152,18 +157,14 @@ class PatientController extends Controller
         ]);
         
         $latestQueue = $patient->latestClinic()->first();
-        
-        if (!$latestQueue) {
-            return redirect()->route('patients.show', $patient)
-                ->with('error', 'Patient has no queue history.');
-        }
+       
 
-        $clinicId = $latestQueue->clinic_id;
+        $clinicId = $latestQueue->clinic_id ?? 1;
 
         $medicalExamination = new MedicalExamination([
             'patient_id' => $patient->id,
-            'doctor_id' => $doctorId,
-            'clinic_id' => $clinicId,
+            'doctor_id' => $doctorId ?? $inpatient->doctor_id,
+            'clinic_id' => $clinicId ,
             'examination_datetime' => Carbon::now()->toDateTimeString(),
             'diagnosis' => $request->diagnosis,
             'prescription' => $request->prescription,

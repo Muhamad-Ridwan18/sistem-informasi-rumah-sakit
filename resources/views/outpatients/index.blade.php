@@ -52,7 +52,7 @@
                             <th><h6>Name</h6></th>
                             <th><h6>No Rekam Medis</h6></th>
                             <th><h6>Poliklinik</h6></th>
-                            <th><h6>tanggal terakhir masuk</h6></th>
+                            <th><h6>tanggal masuk</h6></th>
                             
                         </tr>
                         <!-- end table row-->
@@ -73,7 +73,7 @@
                                     <p>{{ $data->clinic->name }}</p>
                                 </td>
                                 <td>
-                                    <p>{{ $data->last_visit }}</p>
+                                    <p>{{ date('d M Y', strtotime($data->created_at)) }}</p>
                                 </td>
                                 {{-- <td>
                                     <a href="{{ route('patients.show', $data) }}" class="btn btn-primary">Show</a>

@@ -24,4 +24,9 @@ class Room extends Model
     {
         return $this->hasMany(Inpatient::class);
     }
+
+    public function queue()  
+    {
+        return $this->hasMany(Queue::class);    
+    }
 }

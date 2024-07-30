@@ -33,6 +33,7 @@ class Clinic extends Model
     {
         return $this->hasMany(Inpatient::class);
     }
+    
 
 
 }

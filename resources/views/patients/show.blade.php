@@ -123,23 +123,21 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">No</th>
-                                                <th class="text-center">Dokter</th>
-                                                <th class="text-center">Diagnosis</th>
-                                                <th class="text-center">Tanggal Pemeriksaan</th>
-                                                <th class="text-center">poliklinik</th>
-                                                <th class="text-center">Resep</th>
-                                                <th class="text-center">Biaya Pemeriksaan</th>
-                                                <th class="text-center">Rician Biaya</th>
+                                                <th >Dokter</th>
+                                                <th >Diagnosis</th>
+                                                <th >Tanggal Pemeriksaan</th>
+                                                <th >poliklinik</th>
+                                                <th >Resep</th>
+                                                <th >Biaya Pemeriksaan</th>
+                                                <th >Rician Biaya</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @forelse ($medicalExaminations as $medicalExamination)
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $medicalExamination->doctor->full_name }}</td>
                                                     <td>{{ $medicalExamination->diagnosis }}</td>
-                                                    <td>{{ $medicalExamination->examination_datetime }}</td>
+                                                    <td>{{ date('d-M-Y', strtotime($medicalExamination->examination_datetime)) }}</td>
                                                     <td>{{ $medicalExamination->clinic->name }}</td>
                                                     <td>{{ $medicalExamination->prescription ?: '-' }}</td>
                                                     @php
@@ -154,7 +152,7 @@
                                                     <td>Rp {{  $total }}</td>
                                                     <td>
                                                         <div class="row">
-                                                            <div class="col d-flex justify-content-between">
+                                                            <div class="col ">
                                                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $loop->iteration }}">
                                                                     Show Details
                                                                 </button>
